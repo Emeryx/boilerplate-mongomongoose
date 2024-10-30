@@ -1,4 +1,5 @@
 require('dotenv').config();
+// Connecting to MongoDB
 mongoose = require('mongoose')
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true, 
@@ -6,8 +7,22 @@ mongoose.connect(process.env.MONGO_URI, {
   useFindAndModify: false,
   useCreateIndex: true
 })
-console.log(mongoose.version)
+
+const personSchema = new mongoose.Schema({
+  name: {
+    type: String, required: true
+  },
+  age: {
+    type: Number, required: true
+  },
+  favoriteFoods: {
+    type: [String], required: true
+  }
+})
+
 let Person;
+
+Person = new mongoose.model('Person', personSchema)
 
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
